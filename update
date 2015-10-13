@@ -10,6 +10,7 @@ for PATCH in "${PATCHES[@]}"; do
     [[ -x "$PATCH/patch" ]]     || continue;
     [[ -e "$PATCH/patch.log" ]] && continue;
 
+    echo Executing patch ${PATCH_NAME}
     cd "$PATCH"
     if ! ./patch &> "$PATCH/patch.log"; then
         echo "Warning: patch ${PATCH_NAME} did not return successfully (see patch error log for more details)"
