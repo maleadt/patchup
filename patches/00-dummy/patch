@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -uxe
+
+echo "This is a dummy patch!"

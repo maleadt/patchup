@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -ue
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+PATCHES=($(ls -d $DIR/patches/*/ | sort -V))
+for PATCH in "${PATCHES[@]}"; do
+    PATCH_NAME=$(basename "$PATCH")
+
+    [[ -x "$PATCH/patch" ]]     || continue;
+    [[ -e "$PATCH/patch.log" ]] && continue;
+
+    cd "$PATCH"
+    if ! ./patch &> "$PATCH/patch.log"; then
+        echo "Warning: patch ${PATCH_NAME} did not return successfully (see patch error log for more details)"
+        # move the log so the patch is re-executed, hopefully with more success
+        mv "$PATCH/patch.log" "$PATCH/patch.err"
+    fi
+done

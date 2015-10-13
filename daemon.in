@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -ue
+
+cd "%ROOT_DIR%"
+
+while true; do
+    # Only act if there is a working network connection
+    if ping -c 1 github.com &> /dev/null; then
+        # Fetch everything, and check if we match with upstream
+        git fetch --all
+        LOCAL=$(git rev-parse @)
+        REMOTE=$(git rev-parse @{u})
+
+        if [[ $LOCAL != $REMOTE ]]; then
+            # Get the symbolic upstream name (eg. origin/master) and reset to it
+            REMOTE_NAME=$(git rev-parse --abbrev-ref --symbolic-full-name @{u})
+            git reset --hard $(REMOTE_NAME)
+
+            ./update
+        fi
+
+        sleep 300
+    else
+        sleep 60
+    fi
+done
