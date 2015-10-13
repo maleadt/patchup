@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -uxe
+
+echo "testing testing"
+
