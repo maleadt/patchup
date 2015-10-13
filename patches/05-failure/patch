@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-echo I fail...
-
-exit 1
-
