@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -uxe
+
+echo "Installing Linux firmware"
+
+apt update
+apt install -y firmware-linux
